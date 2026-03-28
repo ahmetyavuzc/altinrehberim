@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Altın Rehberim</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f6f6f3;
+      color: #1f1f1f;
+    }
+    .container {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .brand {
+      font-size: 28px;
+      font-weight: 700;
+    }
+    .date {
+      color: #666;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    }
+    .label {
+      font-size: 14px;
+      color: #7a7a7a;
+      margin-bottom: 8px;
+    }
+    .price {
+      font-size: 36px;
+      font-weight: 700;
+      margin: 0 0 6px;
+    }
+    .up {
+      color: #0a8f3d;
+      font-weight: 700;
+    }
+    .row {
+      display: flex;
+      gap: 10px;
+    }
+    .mini {
+      flex: 1;
+      background: #faf8ef;
+      border-radius: 14px;
+      padding: 12px;
+    }
+    .mini strong {
+      display: block;
+      font-size: 18px;
+      margin-top: 6px;
+    }
+    .title {
+      font-size: 22px;
+      font-weight: 700;
+      margin: 6px 0 4px;
+    }
+    .good {
+      color: #0a8f3d;
+      font-weight: 700;
+    }
+    .warn {
+      color: #a56b00;
+      font-weight: 700;
+    }
+    .banks {
+      display: grid;
+      gap: 10px;
+    }
+    .bank-item {
+      background: #fcfcfc;
+      border: 1px solid #ececec;
+      border-radius: 14px;
+      padding: 12px;
+    }
+    .bank-item h4 {
+      margin: 0 0 8px;
+      font-size: 17px;
+    }
+    .bank-item p {
+      margin: 4px 0;
+      color: #444;
+    }
+    .buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .btn {
+      border: none;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 14px;
+      background: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div>
+        <div class="brand">Altın Rehberim</div>
+        <div class="date">Bugün altın için sade ve net rehber</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="label">Gram Altın</div>
+      <div class="price">4.287 TL</div>
+      <div class="up">+24 TL bugün</div>
+    </div>
+
+    <div class="row">
+      <div class="mini">
+        <div class="label">Ons</div>
+        <strong>3.325 $</strong>
+      </div>
+      <div class="mini">
+        <div class="label">Dolar</div>
+        <strong>40,72 TL</strong>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="label">Bugün alım için daha uygun yer</div>
+      <div class="title good">Kapalıçarşı</div>
+      <p>Bankalara göre yaklaşık <strong>22 TL</strong> daha uygun görünüyor.</p>
+    </div>
+
+    <div class="card">
+      <div class="label">Alış - satış farkı</div>
+      <p><span class="good">Kapalıçarşı: Daha dar</span></p>
+      <p><span class="warn">Bankalar: Daha geniş</span></p>
+      <p style="color:#666;">Fark ne kadar düşükse alırken kayıp o kadar az olur.</p>
+    </div>
+
+    <div class="card">
+      <div class="label">Bugünün yorumu</div>
+      <p>Altın fiyatı bugün hafif yukarıda. Kapalıçarşı satış fiyatı bankalara göre daha uygun görünüyor. Bankalarda alış-satış farkı daha yüksek olduğu için maliyet artabiliyor.</p>
+    </div>
+
+    <div class="card">
+      <div class="label">Kurum karşılaştırması</div>
+      <div class="banks">
+        <div class="bank-item">
+          <h4>Kapalıçarşı</h4>
+          <p>Alış: 4.250 TL</p>
+          <p>Satış: 4.287 TL</p>
+          <p class="good">Durum: Uygun</p>
+        </div>
+
+        <div class="bank-item">
+          <h4>Banka Ortalama</h4>
+          <p>Alış: 4.210 TL</p>
+          <p>Satış: 4.309 TL</p>
+          <p class="warn">Durum: Daha pahalı</p>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button class="btn">👍 Uygun</button>
+        <button class="btn">👎 Pahalı</button>
+        <button class="btn">⏳ Bekle</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
