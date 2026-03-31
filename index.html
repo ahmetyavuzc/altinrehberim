@@ -1,67 +1,127 @@
-let cache = {
-  data: null,
-  time: 0
-};
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Altın Rehberim</title>
 
-export default async function handler(req, res) {
-  res.setHeader("Cache-Control", "no-store");
-
-  const now = Date.now();
-
-  // 60 saniye cache
-  if (cache.data && now - cache.time < 60000) {
-    return res.status(200).json(cache.data);
-  }
-
-  const apiKey = process.env.TWELVE_DATA_API_KEY;
-
-  try {
-    const [goldResp, usdResp] = await Promise.all([
-      fetch(`https://api.twelvedata.com/price?symbol=XAU/USD&apikey=${apiKey}`),
-      fetch(`https://api.twelvedata.com/price?symbol=USD/TRY&apikey=${apiKey}`)
-    ]);
-
-    const goldJson = await goldResp.json();
-    const usdJson = await usdResp.json();
-
-    let goldUsdOunce = Number(goldJson.price);
-    let usdTry = Number(usdJson.price);
-
-    // 🔥 fallback (API limit gelirse burası çalışır)
-    if (!goldUsdOunce || !usdTry) {
-      goldUsdOunce = 2320; // gerçekçi fallback
-      usdTry = 32.5;
-
-      const fallbackData = {
-        ok: true,
-        fallback: true,
-        updatedAt: new Date().toISOString(),
-        goldUsdOunce,
-        usdTry,
-        gramTryRef: Number(((goldUsdOunce * usdTry) / 31.103).toFixed(2)),
-        source: "Fallback (API limit)"
-      };
-
-      cache = { data: fallbackData, time: now };
-      return res.status(200).json(fallbackData);
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0b0f1a;
+      color: white;
     }
 
-    const data = {
-      ok: true,
-      updatedAt: new Date().toISOString(),
-      goldUsdOunce,
-      usdTry,
-      gramTryRef: Number(((goldUsdOunce * usdTry) / 31.103).toFixed(2)),
-      source: "TwelveData"
-    };
+    .container {
+      max-width: 500px;
+      margin: auto;
+      padding: 20px;
+    }
 
-    cache = { data, time: now };
+    h1 {
+      margin-bottom: 20px;
+    }
 
-    return res.status(200).json(data);
-  } catch (err) {
-    return res.status(200).json({
-      ok: false,
-      message: "API hatası ama sistem çalışıyor"
-    });
+    .card {
+      background: #141b2d;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    }
+
+    .big {
+      font-size: 32px;
+      color: #ffd700;
+      font-weight: bold;
+    }
+
+    .label {
+      color: #aaa;
+      margin-bottom: 5px;
+    }
+
+    .green {
+      color: #00d084;
+    }
+
+    .loading {
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Altın Rehberim</h1>
+
+  <div class="card">
+    <div class="label">Gram Altın (referans)</div>
+    <div id="gram" class="big loading">Yükleniyor...</div>
+  </div>
+
+  <div class="card">
+    <div class="label">Ons Altın ($)</div>
+    <div id="ons">...</div>
+  </div>
+
+  <div class="card">
+    <div class="label">Dolar / TL</div>
+    <div id="usd">...</div>
+  </div>
+
+  <div class="card">
+    <div class="label">Bugün nereden alınmalı?</div>
+    <div id="suggest" class="green">Hesaplanıyor...</div>
+  </div>
+
+  <div class="card">
+    <div class="label">Yorum</div>
+    <div id="comment">Bekleniyor...</div>
+  </div>
+</div>
+
+<script>
+async function loadData() {
+  try {
+    const res = await fetch("/api/live");
+    const data = await res.json();
+
+    if (!data.ok) {
+      document.getElementById("gram").innerText = "Veri alınamadı";
+      return;
+    }
+
+    const gram = data.gramTryRef;
+    const ons = data.goldUsdOunce;
+    const usd = data.usdTry;
+
+    document.getElementById("gram").innerText = gram + " TL";
+    document.getElementById("gram").classList.remove("loading");
+
+    document.getElementById("ons").innerText = ons + " $";
+    document.getElementById("usd").innerText = usd + " TL";
+
+    // basit analiz
+    if (usd > 40) {
+      document.getElementById("suggest").innerText = "Kapalıçarşı";
+      document.getElementById("comment").innerText =
+        "Bankalara göre daha avantajlı görünüyor.";
+    } else {
+      document.getElementById("suggest").innerText = "Banka";
+      document.getElementById("comment").innerText =
+        "Bankalar daha uygun olabilir.";
+    }
+
+  } catch (e) {
+    document.getElementById("gram").innerText = "Hata oluştu";
   }
 }
+
+loadData();
+setInterval(loadData, 60000);
+</script>
+
+</body>
+</html>
