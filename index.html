@@ -1,107 +1,137 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Altın Rehberim</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Altın Rehberim</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      color: #222;
-    }
+<style>
+body {
+    margin:0;
+    font-family: Arial, sans-serif;
+    background:#0f1115;
+    color:white;
+}
 
-    .container {
-      max-width: 500px;
-      margin: auto;
-      padding: 20px;
-    }
+.container {
+    max-width:500px;
+    margin:auto;
+    padding:20px;
+}
 
-    .card {
-      background: white;
-      padding: 16px;
-      margin-bottom: 15px;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    }
+.card {
+    background:#1a1d24;
+    padding:16px;
+    border-radius:12px;
+    margin-bottom:15px;
+}
 
-    .title {
-      font-size: 22px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
+.title {
+    font-size:22px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
 
-    .big {
-      font-size: 28px;
-      font-weight: bold;
-    }
+.big {
+    font-size:32px;
+    font-weight:bold;
+    color:#ffd700;
+}
 
-    .green { color: green; }
-    .orange { color: orange; }
+.small {
+    color:#aaa;
+}
 
-    .label {
-      font-size: 14px;
-      color: #888;
-      margin-bottom: 5px;
-    }
-  </style>
+.green { color:#4caf50; }
+.orange { color:#ff9800; }
+
+.loading {
+    text-align:center;
+    margin-top:50px;
+    color:#888;
+}
+</style>
 </head>
 
 <body>
 
 <div class="container">
 
-  <div class="card">
-    <div class="title">Altın Rehberim</div>
-    <div class="big" id="gram">Yükleniyor...</div>
-    <div class="green" id="change">...</div>
-  </div>
+<div class="title">Altın Rehberim</div>
 
-  <div class="card">
-    <div>Ons: <span id="ons">-</span></div>
-    <div>Dolar: <span id="usd">-</span></div>
-  </div>
+<div id="loading" class="loading">Veri yükleniyor...</div>
 
-  <div class="card">
-    <div class="label">Bugün en mantıklı yer</div>
-    <div class="green">Kapalıçarşı</div>
-    <div id="yorum">Veri bekleniyor...</div>
-  </div>
+<div id="app" style="display:none">
+
+<div class="card">
+    <div class="small">Gram Altın (referans)</div>
+    <div id="gram" class="big">-</div>
+</div>
+
+<div class="card">
+    <div class="small">Ons Altın ($)</div>
+    <div id="ons">-</div>
+</div>
+
+<div class="card">
+    <div class="small">Dolar / TL</div>
+    <div id="usd">-</div>
+</div>
+
+<div class="card">
+    <div class="small">Bugün nereden alınmalı?</div>
+    <div id="yer" class="green">-</div>
+</div>
+
+<div class="card">
+    <div class="small">Yorum</div>
+    <div id="yorum">-</div>
+</div>
+
+</div>
 
 </div>
 
 <script>
+
 async function loadData() {
-  try {
-    const res = await fetch("/api/live");
-    const data = await res.json();
+    try {
+        const res = await fetch('/api/live');
+        const data = await res.json();
 
-    console.log(data);
+        if(!data.ok){
+            throw new Error("API hata");
+        }
 
-    const gram = data.gramTryRef;
-    const usd = data.usdTry;
-    const ons = data.goldUsdOunce;
+        const gram = data.gramTryRef.toFixed(2);
+        const usd = data.usdTry.toFixed(2);
+        const ons = data.goldUsdOunce.toFixed(2);
 
-    document.getElementById("gram").innerText = gram.toFixed(0) + " TL";
-    document.getElementById("usd").innerText = usd.toFixed(2) + " TL";
-    document.getElementById("ons").innerText = ons + " $";
+        document.getElementById("gram").innerText = gram + " TL";
+        document.getElementById("usd").innerText = usd + " TL";
+        document.getElementById("ons").innerText = ons + " $";
 
-    document.getElementById("change").innerText = "+ Canlı veri";
-    document.getElementById("yorum").innerText =
-      "Altın fiyatı canlı hesaplanıyor. Test aşamasındayız.";
+        // basit yorum motoru
+        if(data.usdTry > 30){
+            document.getElementById("yer").innerText = "Kapalıçarşı";
+            document.getElementById("yer").className = "green";
+            document.getElementById("yorum").innerText = "Bankalara göre daha avantajlı görünüyor.";
+        } else {
+            document.getElementById("yer").innerText = "Bankalar";
+            document.getElementById("yer").className = "orange";
+            document.getElementById("yorum").innerText = "Bankalar daha uygun olabilir.";
+        }
 
-  } catch (err) {
-    console.error(err);
-  }
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("app").style.display = "block";
+
+    } catch (e) {
+        document.getElementById("loading").innerText = "Veri alınamadı";
+    }
 }
 
-// İlk yükleme
 loadData();
 
-// 10 saniyede bir güncelle
-setInterval(loadData, 10000);
 </script>
 
 </body>
