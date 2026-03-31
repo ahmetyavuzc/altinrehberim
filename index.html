@@ -1,330 +1,152 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="robots" content="noindex, nofollow" />
-  <title>Altın Rehberim</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Altın Rehberim</title>
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(180deg, #f8f7f2 0%, #f2f0e8 100%);
-      color: #1f1f1f;
-    }
+<style>
+body {
+  margin:0;
+  font-family: Arial;
+  background:#0f172a;
+  color:white;
+}
 
-    .container {
-      max-width: 560px;
-      margin: 0 auto;
-      padding: 18px 16px 40px;
-    }
+.container {
+  max-width:500px;
+  margin:auto;
+  padding:20px;
+}
 
-    .top-badge {
-      display: inline-block;
-      background: #fff3cd;
-      color: #8a6d1d;
-      border: 1px solid #f1df9a;
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 16px;
-    }
+.header {
+  text-align:center;
+  margin-bottom:20px;
+}
 
-    .hero {
-      background: linear-gradient(135deg, #ffffff 0%, #fbfaf4 100%);
-      border-radius: 24px;
-      padding: 24px 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-      margin-bottom: 16px;
-      border: 1px solid #eee7d6;
-    }
+.header h1 {
+  margin:0;
+  font-size:30px;
+}
 
-    .brand {
-      font-size: 32px;
-      font-weight: 800;
-      margin: 0 0 8px;
-      letter-spacing: -0.5px;
-    }
+.badge {
+  background:#facc15;
+  color:black;
+  padding:6px 10px;
+  border-radius:10px;
+  font-size:12px;
+  display:inline-block;
+  margin-top:10px;
+}
 
-    .subtitle {
-      margin: 0;
-      color: #666;
-      font-size: 15px;
-      line-height: 1.5;
-    }
+.card {
+  background:#1e293b;
+  padding:18px;
+  border-radius:18px;
+  margin-bottom:15px;
+}
 
-    .hero-note {
-      margin-top: 16px;
-      padding: 14px;
-      background: #f6f1df;
-      border-radius: 16px;
-      border: 1px solid #eadfbb;
-      font-size: 14px;
-      line-height: 1.5;
-    }
+.price {
+  font-size:36px;
+  font-weight:bold;
+}
 
-    .card {
-      background: #fff;
-      border-radius: 22px;
-      padding: 18px;
-      margin-bottom: 14px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-      border: 1px solid #efe9da;
-    }
+.green { color:#22c55e; }
+.red { color:#ef4444; }
 
-    .label {
-      font-size: 14px;
-      color: #7d7d7d;
-      margin-bottom: 8px;
-    }
+.hero {
+  background:linear-gradient(135deg,#22c55e,#16a34a);
+  color:white;
+  padding:18px;
+  border-radius:18px;
+  margin-bottom:15px;
+}
 
-    .price {
-      font-size: 40px;
-      font-weight: 800;
-      margin: 0 0 6px;
-      letter-spacing: -1px;
-    }
+.hero strong {
+  font-size:18px;
+}
 
-    .up {
-      color: #128a43;
-      font-weight: 700;
-      font-size: 16px;
-    }
+.row {
+  display:flex;
+  gap:10px;
+}
 
-    .mini-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
+.small {
+  flex:1;
+  background:#1e293b;
+  padding:15px;
+  border-radius:15px;
+}
 
-    .mini-card {
-      background: #fbf8ef;
-      border: 1px solid #efe5c7;
-      border-radius: 18px;
-      padding: 16px;
-    }
+button {
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  margin-right:5px;
+  margin-top:10px;
+  font-weight:bold;
+}
 
-    .mini-card strong {
-      display: block;
-      font-size: 26px;
-      margin-top: 6px;
-    }
-
-    .decision {
-      background: linear-gradient(135deg, #ffffff 0%, #f8fff8 100%);
-      border: 1px solid #dfeedd;
-    }
-
-    .decision-title {
-      font-size: 14px;
-      color: #6d6d6d;
-      margin-bottom: 6px;
-    }
-
-    .decision-main {
-      font-size: 34px;
-      font-weight: 800;
-      color: #0f8e3d;
-      margin: 0 0 8px;
-    }
-
-    .decision-desc {
-      font-size: 18px;
-      line-height: 1.45;
-      margin: 0;
-    }
-
-    .compare-box {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .compare-item {
-      background: #fafafa;
-      border: 1px solid #ededed;
-      border-radius: 16px;
-      padding: 14px;
-    }
-
-    .compare-item h4 {
-      margin: 0 0 8px;
-      font-size: 16px;
-    }
-
-    .compare-item p {
-      margin: 4px 0;
-      font-size: 14px;
-      color: #444;
-    }
-
-    .good {
-      color: #0f8e3d;
-      font-weight: 700;
-    }
-
-    .warn {
-      color: #b06c00;
-      font-weight: 700;
-    }
-
-    .section-title {
-      font-size: 22px;
-      font-weight: 800;
-      margin: 0 0 8px;
-    }
-
-    .text {
-      font-size: 16px;
-      line-height: 1.55;
-      color: #333;
-      margin: 0;
-    }
-
-    .reaction-row {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 14px;
-    }
-
-    .reaction {
-      background: #f2f2f2;
-      border: none;
-      border-radius: 14px;
-      padding: 10px 14px;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .footer-note {
-      text-align: center;
-      color: #8a8a8a;
-      font-size: 12px;
-      line-height: 1.5;
-      margin-top: 12px;
-      padding: 0 10px;
-    }
-
-    @media (max-width: 520px) {
-      .brand {
-        font-size: 28px;
-      }
-
-      .price {
-        font-size: 34px;
-      }
-
-      .decision-main {
-        font-size: 30px;
-      }
-
-      .decision-desc {
-        font-size: 16px;
-      }
-    }
-  </style>
+.footer {
+  font-size:12px;
+  color:#aaa;
+  text-align:center;
+  margin-top:20px;
+}
+</style>
 </head>
+
 <body>
-  <div class="container">
-    <div class="top-badge">🚧 Beta sürüm • Veriler test amaçlıdır</div>
 
-    <div class="hero">
-      <h1 class="brand">Altın Rehberim</h1>
-      <p class="subtitle">
-        Altın alırken sade, anlaşılır ve güven veren bilgi.
-        Kapalıçarşı ile bankaları tek bakışta karşılaştır.
-      </p>
+<div class="container">
 
-      <div class="hero-note">
-        <strong>Bugün ne yapmalı?</strong><br />
-        Şu an alım için daha uygun görünen yer <strong>Kapalıçarşı</strong>.
-        Bankalara göre yaklaşık <strong>22 TL daha avantajlı</strong>.
-      </div>
-    </div>
+<div class="header">
+<h1>Altın Rehberim</h1>
+<div class="badge">BETA • Test sürümü</div>
+</div>
 
-    <div class="card">
-      <div class="label">Gram Altın</div>
-      <div class="price">4.287 TL</div>
-      <div class="up">+24 TL bugün</div>
-    </div>
+<div class="hero">
+<strong>📌 Bugün ne yapmalı?</strong><br>
+Kapalıçarşı şu an daha avantajlı<br>
+Bankalara göre <b>22 TL daha ucuz</b>
+</div>
 
-    <div class="mini-grid">
-      <div class="mini-card">
-        <div class="label">Ons</div>
-        <strong>3.325 $</strong>
-      </div>
+<div class="card">
+Gram Altın
+<div class="price">4.287 TL</div>
+<div class="green">+24 TL</div>
+</div>
 
-      <div class="mini-card">
-        <div class="label">Dolar</div>
-        <strong>40,72 TL</strong>
-      </div>
-    </div>
+<div class="row">
+<div class="small">
+Ons<br>
+<b>3.325 $</b>
+</div>
 
-    <div class="card decision">
-      <div class="decision-title">Bugün alım için daha uygun yer</div>
-      <div class="decision-main">Kapalıçarşı</div>
-      <p class="decision-desc">
-        Bankalara göre yaklaşık <strong>22 TL</strong> daha uygun görünüyor.
-      </p>
-    </div>
+<div class="small">
+Dolar<br>
+<b>40,72 TL</b>
+</div>
+</div>
 
-    <div class="card">
-      <div class="section-title">Alış - satış farkı</div>
-      <p class="text"><span class="good">Kapalıçarşı: Daha dar</span></p>
-      <p class="text"><span class="warn">Bankalar: Daha geniş</span></p>
-      <p class="text" style="color:#666; margin-top:10px;">
-        Fark ne kadar düşükse alırken kayıp o kadar az olur.
-      </p>
-    </div>
+<div class="card">
+<strong>Bugünün Yorumu</strong><br><br>
+Altın bugün yükselişte. Bankalarda makas geniş, Kapalıçarşı daha avantajlı.
+</div>
 
-    <div class="card">
-      <div class="section-title">Bugünün yorumu</div>
-      <p class="text">
-        Altın fiyatı bugün hafif yukarıda. Kapalıçarşı satış fiyatı bankalara göre
-        daha uygun görünüyor. Bankalarda alış-satış farkı daha yüksek olduğu için
-        maliyet artabiliyor.
-      </p>
-    </div>
+<div class="card">
+<strong>Sence bugün?</strong><br>
+<button>👍 Alınır</button>
+<button>👎 Pahalı</button>
+<button>⏳ Bekle</button>
+</div>
 
-    <div class="card">
-      <div class="section-title">Kurum karşılaştırması</div>
+<div class="footer">
+Bu veriler test amaçlıdır. Yatırım tavsiyesi değildir.
+</div>
 
-      <div class="compare-box">
-        <div class="compare-item">
-          <h4>Kapalıçarşı</h4>
-          <p>Alış: 4.250 TL</p>
-          <p>Satış: 4.287 TL</p>
-          <p class="good">Durum: Uygun</p>
-        </div>
+</div>
 
-        <div class="compare-item">
-          <h4>Banka Ortalama</h4>
-          <p>Alış: 4.210 TL</p>
-          <p>Satış: 4.309 TL</p>
-          <p class="warn">Durum: Daha pahalı</p>
-        </div>
-      </div>
-
-      <div class="reaction-row">
-        <button class="reaction">👍 Uygun</button>
-        <button class="reaction">👎 Pahalı</button>
-        <button class="reaction">⏳ Bekle</button>
-      </div>
-    </div>
-
-    <div class="footer-note">
-      Bu sayfadaki veriler şimdilik test amaçlı gösterilmektedir.
-      Yatırım tavsiyesi değildir.
-    </div>
-  </div>
 </body>
 </html>
