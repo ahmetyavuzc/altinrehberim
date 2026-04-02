@@ -1,628 +1,157 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="robots" content="noindex, nofollow" />
-  <title>Altın Rehberim</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Altın Rehberim</title>
 
-  <style>
-    :root{
-      --bg:#f5f1e8;
-      --bg2:#efe9dc;
-      --card:#ffffff;
-      --text:#1f2937;
-      --muted:#6b7280;
-      --gold:#c69214;
-      --gold-soft:#fff4d6;
-      --green:#14804a;
-      --green-soft:#e7f6ed;
-      --red:#b42318;
-      --red-soft:#fdecec;
-      --blue:#1d4ed8;
-      --border:#e8dfcd;
-      --shadow:0 10px 30px rgba(0,0,0,0.06);
-      --radius:22px;
-    }
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#0f172a;
+  color:white;
+}
 
-    * { box-sizing: border-box; }
+.container{
+  max-width:600px;
+  margin:auto;
+  padding:20px;
+}
 
-    body{
-      margin:0;
-      font-family: Arial, sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(circle at top, #fffaf0 0%, var(--bg) 45%, var(--bg2) 100%);
-    }
+.card{
+  background:#1e293b;
+  border-radius:16px;
+  padding:20px;
+  margin-bottom:15px;
+}
 
-    .wrap{
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 18px 16px 36px;
-    }
+.title{
+  font-size:22px;
+  font-weight:bold;
+}
 
-    .top-row{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      gap:12px;
-      margin-bottom:16px;
-    }
+.big{
+  font-size:40px;
+  font-weight:bold;
+  color:#facc15;
+}
 
-    .brand h1{
-      margin:0;
-      font-size:42px;
-      line-height:1;
-      letter-spacing:-1px;
-    }
+.green{ color:#22c55e; }
+.red{ color:#ef4444; }
+.gray{ color:#94a3b8; }
 
-    .brand p{
-      margin:10px 0 0;
-      color:var(--muted);
-      font-size:15px;
-      line-height:1.5;
-      max-width:620px;
-    }
+.table{
+  display:flex;
+  justify-content:space-between;
+  margin-top:10px;
+}
 
-    .beta-pill{
-      background:var(--gold-soft);
-      color:#7a5a00;
-      border:1px solid #ead28a;
-      border-radius:999px;
-      padding:9px 12px;
-      font-size:13px;
-      font-weight:700;
-      white-space:nowrap;
-    }
-
-    .notice{
-      background:#fff8e8;
-      border:1px solid #efd79b;
-      color:#775c12;
-      border-radius:18px;
-      padding:14px 16px;
-      margin-bottom:16px;
-      line-height:1.55;
-      font-size:14px;
-    }
-
-    .error{
-      display:none;
-      background:var(--red-soft);
-      border:1px solid #f6c7c7;
-      color:var(--red);
-      border-radius:16px;
-      padding:14px;
-      margin-bottom:14px;
-      font-size:14px;
-    }
-
-    .hero{
-      display:grid;
-      grid-template-columns:1.15fr .85fr;
-      gap:14px;
-      margin-bottom:14px;
-    }
-
-    .card{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:18px;
-    }
-
-    .label{
-      font-size:14px;
-      color:var(--muted);
-      margin-bottom:8px;
-    }
-
-    .big-price{
-      font-size:54px;
-      font-weight:800;
-      color:var(--gold);
-      line-height:1;
-      letter-spacing:-1px;
-      margin:0 0 10px;
-    }
-
-    .subline{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      align-items:center;
-      font-size:13px;
-      color:var(--muted);
-    }
-
-    .pill{
-      display:inline-block;
-      padding:8px 12px;
-      border-radius:999px;
-      font-size:13px;
-      font-weight:700;
-    }
-
-    .pill-green{
-      background:var(--green-soft);
-      color:var(--green);
-    }
-
-    .pill-gold{
-      background:var(--gold-soft);
-      color:#7a5a00;
-    }
-
-    .pill-blue{
-      background:#e8efff;
-      color:#294fba;
-    }
-
-    .decision{
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      min-height:100%;
-    }
-
-    .decision-main{
-      font-size:30px;
-      font-weight:800;
-      margin:8px 0;
-    }
-
-    .decision-main.good{ color:var(--green); }
-    .decision-main.warn{ color:#996300; }
-    .decision-main.bad{ color:var(--red); }
-
-    .decision-text{
-      margin:0;
-      font-size:15px;
-      line-height:1.6;
-      color:#374151;
-    }
-
-    .grid3{
-      display:grid;
-      grid-template-columns:1fr 1fr 1fr;
-      gap:14px;
-      margin-bottom:14px;
-    }
-
-    .mini-value{
-      font-size:30px;
-      font-weight:800;
-      line-height:1.1;
-    }
-
-    .section-title{
-      margin:0 0 12px;
-      font-size:24px;
-      font-weight:800;
-      letter-spacing:-0.3px;
-    }
-
-    .market-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:14px;
-      margin-bottom:14px;
-    }
-
-    .market-box{
-      border:1px solid var(--border);
-      border-radius:18px;
-      padding:16px;
-      background:#fffdf9;
-    }
-
-    .market-box h3{
-      margin:0 0 10px;
-      font-size:20px;
-    }
-
-    .rows{
-      display:grid;
-      gap:10px;
-    }
-
-    .row{
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      align-items:center;
-      padding:10px 0;
-      border-bottom:1px dashed #e8dfcd;
-    }
-
-    .row:last-child{
-      border-bottom:none;
-      padding-bottom:0;
-    }
-
-    .row span:first-child{
-      color:var(--muted);
-      font-size:14px;
-    }
-
-    .row strong{
-      font-size:20px;
-    }
-
-    .advantage{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:14px;
-      margin-bottom:14px;
-    }
-
-    .adv-card{
-      background:#fffdfa;
-      border:1px solid var(--border);
-      border-radius:18px;
-      padding:16px;
-    }
-
-    .adv-main{
-      font-size:28px;
-      font-weight:800;
-      margin-top:6px;
-    }
-
-    .products{
-      display:grid;
-      grid-template-columns:1fr 1fr 1fr;
-      gap:12px;
-    }
-
-    .product{
-      border:1px solid var(--border);
-      border-radius:18px;
-      padding:14px;
-      background:#fffdf9;
-    }
-
-    .product h4{
-      margin:0 0 6px;
-      font-size:17px;
-    }
-
-    .product .price{
-      font-size:26px;
-      font-weight:800;
-      margin:0 0 4px;
-    }
-
-    .product p{
-      margin:0;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.5;
-    }
-
-    .meta{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:14px;
-      margin-top:14px;
-    }
-
-    .meta-box{
-      background:#faf7ef;
-      border:1px solid var(--border);
-      border-radius:18px;
-      padding:14px;
-      font-size:14px;
-      line-height:1.6;
-      color:#4b5563;
-    }
-
-    .source{
-      margin-top:14px;
-      font-size:13px;
-      color:#6b7280;
-      line-height:1.6;
-      text-align:center;
-    }
-
-    @media (max-width: 820px){
-      .hero,
-      .grid3,
-      .market-grid,
-      .advantage,
-      .products,
-      .meta{
-        grid-template-columns:1fr;
-      }
-
-      .top-row{
-        flex-direction:column;
-      }
-
-      .brand h1{
-        font-size:34px;
-      }
-
-      .big-price{
-        font-size:46px;
-      }
-    }
-  </style>
+.beta{
+  font-size:12px;
+  color:#94a3b8;
+  margin-bottom:10px;
+}
+</style>
 </head>
+
 <body>
-  <div class="wrap">
-    <div class="top-row">
-      <div class="brand">
-        <h1>Altın Rehberim</h1>
-        <p>
-          Altın için sade, anlaşılır ve güven veren beta ekranı.
-          Veriler bilgilendirme amaçlıdır. Yatırım tavsiyesi değildir.
-        </p>
-      </div>
-      <div class="beta-pill">BETA SÜRÜM</div>
-    </div>
 
-    <div class="notice">
-      <strong>Uyarı:</strong> Bu sayfadaki veriler bilgilendirme amaçlıdır.
-      Yatırım tavsiyesi değildir. Kapalıçarşı ve banka fiyatları şu aşamada yaklaşık makas modeliyle hesaplanır.
-    </div>
+<div class="container">
 
-    <div class="error" id="errorBox"></div>
+<div class="beta">
+⚠️ Beta sürüm – yatırım tavsiyesi değildir
+</div>
 
-    <div class="hero">
-      <div class="card">
-        <div class="label">Referans Gram Altın</div>
-        <div class="big-price" id="gramPrice">Yükleniyor...</div>
-        <div class="subline">
-          <span class="pill pill-gold" id="updatedAt">Son güncelleme bekleniyor</span>
-          <span class="pill pill-green" id="sourceName">Kaynak bekleniyor</span>
-          <span class="pill pill-blue" id="marketSource">Piyasa modeli bekleniyor</span>
-        </div>
-      </div>
+<div class="card">
+<div class="title">BUGÜN EN UCUZ YER</div>
+<div id="best" class="big">Yükleniyor...</div>
+<div id="diff" class="green"></div>
+</div>
 
-      <div class="card decision">
-        <div>
-          <div class="label">Bugün daha uygun görünen yer</div>
-          <div class="decision-main" id="decisionMain">Hesaplanıyor...</div>
-          <p class="decision-text" id="decisionText">
-            Karşılaştırma verileri geldikten sonra kısa yön burada görünecek.
-          </p>
-        </div>
-      </div>
-    </div>
+<div class="card">
+<div class="title">Piyasa Karşılaştırma</div>
 
-    <div class="grid3">
-      <div class="card">
-        <div class="label">Ons Altın ($)</div>
-        <div class="mini-value" id="ouncePrice">Yükleniyor...</div>
-      </div>
+<div class="table">
+<div>Kapalıçarşı</div>
+<div id="kapali">-</div>
+</div>
 
-      <div class="card">
-        <div class="label">Dolar / TL</div>
-        <div class="mini-value" id="usdTry">Yükleniyor...</div>
-      </div>
+<div class="table">
+<div>Banka</div>
+<div id="banka">-</div>
+</div>
 
-      <div class="card">
-        <div class="label">Sistem Durumu</div>
-        <div class="mini-value" id="systemState">Yükleniyor...</div>
-      </div>
-    </div>
+</div>
 
-    <div class="card">
-      <h2 class="section-title">Piyasa karşılaştırması</h2>
-      <div class="market-grid">
-        <div class="market-box">
-          <h3>Kapalıçarşı</h3>
-          <div class="rows">
-            <div class="row">
-              <span>Alış</span>
-              <strong id="kapaliBuy">Yükleniyor...</strong>
-            </div>
-            <div class="row">
-              <span>Satış</span>
-              <strong id="kapaliSell">Yükleniyor...</strong>
-            </div>
-            <div class="row">
-              <span>Makas</span>
-              <strong id="kapaliSpread">Yükleniyor...</strong>
-            </div>
-          </div>
-        </div>
+<div class="card">
+<div class="title">Gerçek Değer</div>
+<div id="ref" class="big">-</div>
+</div>
 
-        <div class="market-box">
-          <h3>Banka Ortalama</h3>
-          <div class="rows">
-            <div class="row">
-              <span>Alış</span>
-              <strong id="bankaBuy">Yükleniyor...</strong>
-            </div>
-            <div class="row">
-              <span>Satış</span>
-              <strong id="bankaSell">Yükleniyor...</strong>
-            </div>
-            <div class="row">
-              <span>Makas</span>
-              <strong id="bankaSpread">Yükleniyor...</strong>
-            </div>
-          </div>
-        </div>
-      </div>
+<div class="card">
+<div class="title">Yorum</div>
+<div id="comment">Yükleniyor...</div>
+</div>
 
-      <div class="advantage">
-        <div class="adv-card">
-          <div class="label">Satış tarafında fark</div>
-          <div class="adv-main" id="advantageTl">Yükleniyor...</div>
-        </div>
+</div>
 
-        <div class="adv-card">
-          <div class="label">Özet yorum</div>
-          <div class="adv-main" id="marketSummary" style="font-size:22px;">Yükleniyor...</div>
-        </div>
-      </div>
-    </div>
+<script>
+async function loadData(){
+  try{
+    const [liveRes, marketRes] = await Promise.all([
+      fetch("/api/live"),
+      fetch("/api/market")
+    ]);
 
-    <div class="card">
-      <h2 class="section-title">Altın türleri</h2>
-      <div class="products">
-        <div class="product">
-          <h4>22 Ayar Gram</h4>
-          <div class="price" id="gram22">Yükleniyor...</div>
-          <p>Referans hesaplama</p>
-        </div>
+    const live = await liveRes.json();
+    const market = await marketRes.json();
 
-        <div class="product">
-          <h4>Çeyrek Altın</h4>
-          <div class="price" id="quarter">Yükleniyor...</div>
-          <p>Referans hesaplama</p>
-        </div>
-
-        <div class="product">
-          <h4>Yarım Altın</h4>
-          <div class="price" id="half">Yükleniyor...</div>
-          <p>Referans hesaplama</p>
-        </div>
-
-        <div class="product">
-          <h4>Tam Altın</h4>
-          <div class="price" id="full">Yükleniyor...</div>
-          <p>Referans hesaplama</p>
-        </div>
-
-        <div class="product">
-          <h4>Ata Altın</h4>
-          <div class="price" id="ata">Yükleniyor...</div>
-          <p>Referans hesaplama</p>
-        </div>
-
-        <div class="product">
-          <h4>Yön Kartı</h4>
-          <div class="price" id="suggestionText" style="font-size:22px;">Yükleniyor...</div>
-          <p>Beta yorum motoru</p>
-        </div>
-      </div>
-
-      <div class="meta">
-        <div class="meta-box">
-          <strong>Bu ekranda ne görüyorsun?</strong><br>
-          Ons altın ve USD/TRY canlı kaynaktan gelir. Kapalıçarşı ve banka fiyatları ise şu aşamada yaklaşık makas modeliyle hesaplanır.
-        </div>
-
-        <div class="meta-box">
-          <strong>Sonraki aşama</strong><br>
-          Gerçek Kapalıçarşı verisi, banka alış/satış verileri, makas alarmı ve forum/yorum sistemi eklenecek.
-        </div>
-      </div>
-
-      <div class="source">
-        Bu ekran beta sürümdür. Veriler bilgilendirme amaçlıdır ve yatırım tavsiyesi değildir.
-      </div>
-    </div>
-  </div>
-
-  <script>
-    function tl(value) {
-      return new Intl.NumberFormat("tr-TR", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      }).format(value) + " TL";
+    if(!live.ok || !market.ok){
+      document.getElementById("best").innerText = "Veri yok";
+      return;
     }
 
-    function usd(value) {
-      return new Intl.NumberFormat("en-US", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      }).format(value) + " $";
+    const kapali = market.kapalicarsi.sell;
+    const banka = market.banka.sell;
+
+    document.getElementById("kapali").innerText = kapali + " TL";
+    document.getElementById("banka").innerText = banka + " TL";
+
+    document.getElementById("ref").innerText = live.gramTryRef + " TL";
+
+    let best = "";
+    let diff = Math.abs(kapali - banka);
+
+    if(kapali < banka){
+      best = "Kapalıçarşı";
+      document.getElementById("diff").innerText = "+" + diff + " TL avantaj";
+      document.getElementById("best").className = "big green";
+    } else {
+      best = "Banka";
+      document.getElementById("diff").innerText = "+" + diff + " TL avantaj";
+      document.getElementById("best").className = "big green";
     }
 
-    function rate(value) {
-      return new Intl.NumberFormat("tr-TR", {
-        minimumFractionDigits: 4,
-        maximumFractionDigits: 4
-      }).format(value) + " TL";
+    document.getElementById("best").innerText = best;
+
+    // yorum
+    if(live.gramTryRef > 4700){
+      document.getElementById("comment").innerText =
+        "Fiyatlar yüksek seviyede, acele alım riskli olabilir.";
+    } else {
+      document.getElementById("comment").innerText =
+        "Fiyatlar daha dengeli, karşılaştırarak alım yapılabilir.";
     }
 
-    function timeText(iso) {
-      if (!iso) return "Son güncelleme yok";
-      return "Son güncelleme: " + new Date(iso).toLocaleTimeString("tr-TR");
-    }
+  }catch(e){
+    document.getElementById("best").innerText = "Hata";
+  }
+}
 
-    async function loadAll() {
-      const errorBox = document.getElementById("errorBox");
+loadData();
+setInterval(loadData, 30000);
+</script>
 
-      try {
-        const [liveRes, marketRes] = await Promise.all([
-          fetch("/api/live?t=" + Date.now(), { cache: "no-store" }),
-          fetch("/api/market?t=" + Date.now(), { cache: "no-store" })
-        ]);
-
-        const live = await liveRes.json();
-        const market = await marketRes.json();
-
-        if (!live.ok) throw new Error(live.message || "Canlı veri alınamadı");
-        if (!market.ok) throw new Error(market.message || "Piyasa verisi alınamadı");
-
-        errorBox.style.display = "none";
-
-        document.getElementById("gramPrice").textContent = tl(live.gramTryRef);
-        document.getElementById("updatedAt").textContent = timeText(live.updatedAt);
-        document.getElementById("sourceName").textContent = live.source || "Kaynak";
-        document.getElementById("marketSource").textContent = market.source || "Piyasa modeli";
-
-        document.getElementById("ouncePrice").textContent = usd(live.goldUsdOunce);
-        document.getElementById("usdTry").textContent = rate(live.usdTry);
-
-        document.getElementById("gram22").textContent = tl(live.gram22Ref);
-        document.getElementById("quarter").textContent = tl(live.quarterRef);
-        document.getElementById("half").textContent = tl(live.halfRef);
-        document.getElementById("full").textContent = tl(live.fullRef);
-        document.getElementById("ata").textContent = tl(live.ataRef);
-        document.getElementById("suggestionText").textContent = live.suggestion || "Bekle";
-
-        if (live.fallback) {
-          document.getElementById("systemState").textContent = "Yedek veri";
-        } else if (live.cache) {
-          document.getElementById("systemState").textContent = "Önbellek";
-        } else {
-          document.getElementById("systemState").textContent = "Canlı";
-        }
-
-        document.getElementById("kapaliBuy").textContent = tl(market.kapalicarsi.buy);
-        document.getElementById("kapaliSell").textContent = tl(market.kapalicarsi.sell);
-        document.getElementById("kapaliSpread").textContent = tl(market.kapalicarsi.spread);
-
-        document.getElementById("bankaBuy").textContent = tl(market.banka.buy);
-        document.getElementById("bankaSell").textContent = tl(market.banka.sell);
-        document.getElementById("bankaSpread").textContent = tl(market.banka.spread);
-
-        document.getElementById("advantageTl").textContent =
-          market.advantageTl >= 0
-            ? tl(market.advantageTl)
-            : "- " + tl(Math.abs(market.advantageTl));
-
-        document.getElementById("marketSummary").textContent = market.summary || "Karşılaştırma yok";
-
-        document.getElementById("decisionMain").textContent = market.bestPlace || "Karşılaştır";
-        document.getElementById("decisionText").textContent =
-          market.summary || "Fark analizi hazırlanamadı.";
-
-        const decision = document.getElementById("decisionMain");
-        if (market.status === "kapali") {
-          decision.className = "decision-main good";
-        } else if (market.status === "banka") {
-          decision.className = "decision-main good";
-        } else {
-          decision.className = "decision-main warn";
-        }
-
-      } catch (err) {
-        errorBox.style.display = "block";
-        errorBox.textContent = "Veri hatası: " + err.message;
-      }
-    }
-
-    loadAll();
-    setInterval(loadAll, 30000);
-  </script>
 </body>
 </html>
