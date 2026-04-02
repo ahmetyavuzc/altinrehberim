@@ -3,54 +3,289 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex, nofollow" />
 <title>Altın Rehberim</title>
 
 <style>
+:root{
+  --bg:#0f172a;
+  --card:#1e293b;
+  --card2:#172133;
+  --text:#ffffff;
+  --muted:#94a3b8;
+  --gold:#facc15;
+  --green:#22c55e;
+  --red:#ef4444;
+  --blue:#38bdf8;
+  --border:rgba(255,255,255,0.06);
+}
+
+*{
+  box-sizing:border-box;
+}
+
 body{
   margin:0;
-  font-family:Arial;
-  background:#0f172a;
-  color:white;
+  font-family:Arial, sans-serif;
+  background:linear-gradient(180deg,#0f172a 0%, #111827 100%);
+  color:var(--text);
 }
 
 .container{
-  max-width:600px;
+  max-width:680px;
   margin:auto;
-  padding:20px;
+  padding:20px 16px 40px;
+}
+
+.header{
+  margin-bottom:18px;
+}
+
+.brand{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  margin-bottom:10px;
+}
+
+.brand-left h1{
+  margin:0;
+  font-size:34px;
+  line-height:1.05;
+}
+
+.brand-left p{
+  margin:8px 0 0;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.5;
+}
+
+.beta{
+  font-size:12px;
+  color:var(--muted);
+  margin-bottom:8px;
+}
+
+.beta-badge{
+  background:rgba(250,204,21,0.12);
+  color:var(--gold);
+  border:1px solid rgba(250,204,21,0.25);
+  border-radius:999px;
+  padding:8px 12px;
+  font-size:12px;
+  font-weight:bold;
+  white-space:nowrap;
+}
+
+.notice{
+  background:rgba(250,204,21,0.08);
+  color:#fde68a;
+  border:1px solid rgba(250,204,21,0.18);
+  border-radius:14px;
+  padding:12px 14px;
+  font-size:13px;
+  line-height:1.5;
+  margin-bottom:16px;
 }
 
 .card{
-  background:#1e293b;
-  border-radius:16px;
-  padding:20px;
+  background:linear-gradient(180deg,var(--card) 0%, var(--card2) 100%);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:18px;
   margin-bottom:15px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.22);
 }
 
 .title{
-  font-size:22px;
+  font-size:20px;
   font-weight:bold;
+  margin-bottom:10px;
+}
+
+.label{
+  font-size:13px;
+  color:var(--muted);
+  margin-bottom:6px;
 }
 
 .big{
   font-size:40px;
   font-weight:bold;
-  color:#facc15;
+  color:var(--gold);
+  line-height:1.05;
 }
 
-.green{ color:#22c55e; }
-.red{ color:#ef4444; }
-.gray{ color:#94a3b8; }
+.green{ color:var(--green); }
+.red{ color:var(--red); }
+.gray{ color:var(--muted); }
+.blue{ color:var(--blue); }
+
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.15fr 0.85fr;
+  gap:15px;
+  margin-bottom:15px;
+}
+
+.hero-box .sub{
+  margin-top:10px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.pill{
+  display:inline-block;
+  padding:8px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:bold;
+}
+
+.pill-gold{
+  background:rgba(250,204,21,0.12);
+  color:var(--gold);
+  border:1px solid rgba(250,204,21,0.22);
+}
+
+.pill-blue{
+  background:rgba(56,189,248,0.12);
+  color:var(--blue);
+  border:1px solid rgba(56,189,248,0.22);
+}
+
+.pill-green{
+  background:rgba(34,197,94,0.12);
+  color:var(--green);
+  border:1px solid rgba(34,197,94,0.22);
+}
+
+.pill-red{
+  background:rgba(239,68,68,0.12);
+  color:var(--red);
+  border:1px solid rgba(239,68,68,0.22);
+}
+
+.decision-box{
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  min-height:100%;
+}
+
+.decision-main{
+  font-size:34px;
+  font-weight:bold;
+  line-height:1.05;
+  margin:8px 0;
+}
+
+.decision-text{
+  color:var(--muted);
+  line-height:1.55;
+  font-size:14px;
+}
+
+.stats-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:15px;
+  margin-bottom:15px;
+}
+
+.stat-value{
+  font-size:28px;
+  font-weight:bold;
+  line-height:1.1;
+}
 
 .table{
   display:flex;
   justify-content:space-between;
-  margin-top:10px;
+  align-items:center;
+  gap:12px;
+  margin-top:12px;
+  padding-bottom:12px;
+  border-bottom:1px solid rgba(255,255,255,0.06);
 }
 
-.beta{
+.table:last-child{
+  border-bottom:none;
+  padding-bottom:0;
+}
+
+.table-left{
+  color:var(--muted);
+  font-size:14px;
+}
+
+.table-right{
+  font-size:20px;
+  font-weight:bold;
+}
+
+.market-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.market-box{
+  background:rgba(255,255,255,0.02);
+  border:1px solid rgba(255,255,255,0.05);
+  border-radius:14px;
+  padding:14px;
+}
+
+.market-box h3{
+  margin:0 0 8px;
+  font-size:18px;
+}
+
+.footer{
+  margin-top:16px;
+  text-align:center;
+  color:var(--muted);
   font-size:12px;
-  color:#94a3b8;
-  margin-bottom:10px;
+  line-height:1.6;
+}
+
+.error{
+  display:none;
+  background:rgba(239,68,68,0.12);
+  border:1px solid rgba(239,68,68,0.22);
+  color:#fecaca;
+  border-radius:14px;
+  padding:12px 14px;
+  margin-bottom:15px;
+  font-size:13px;
+}
+
+@media (max-width:700px){
+  .hero-grid,
+  .stats-grid,
+  .market-grid{
+    grid-template-columns:1fr;
+  }
+
+  .brand{
+    flex-direction:column;
+  }
+
+  .brand-left h1{
+    font-size:30px;
+  }
+
+  .big{
+    font-size:34px;
+  }
+
+  .decision-main{
+    font-size:30px;
+  }
 }
 </style>
 </head>
@@ -59,93 +294,220 @@ body{
 
 <div class="container">
 
-<div class="beta">
-⚠️ Beta sürüm – yatırım tavsiyesi değildir
-</div>
+  <div class="header">
+    <div class="beta">⚠️ Beta sürüm – yatırım tavsiyesi değildir</div>
 
-<div class="card">
-<div class="title">BUGÜN EN UCUZ YER</div>
-<div id="best" class="big">Yükleniyor...</div>
-<div id="diff" class="green"></div>
-</div>
+    <div class="brand">
+      <div class="brand-left">
+        <h1>Altın Rehberim</h1>
+        <p>
+          Altın için sade, hızlı ve güven veren karar ekranı.
+          Canlı veri omurgasıyla çalışır, piyasa karşılaştırması beta modelle gösterilir.
+        </p>
+      </div>
+      <div class="beta-badge">BETA SÜRÜM</div>
+    </div>
 
-<div class="card">
-<div class="title">Piyasa Karşılaştırma</div>
+    <div class="notice">
+      Bu ekrandaki veriler bilgilendirme amaçlıdır. Yatırım tavsiyesi değildir.
+      Kapalıçarşı ve banka verileri şu aşamada yaklaşık model ile gösterilebilir.
+    </div>
+  </div>
 
-<div class="table">
-<div>Kapalıçarşı</div>
-<div id="kapali">-</div>
-</div>
+  <div class="error" id="errorBox"></div>
 
-<div class="table">
-<div>Banka</div>
-<div id="banka">-</div>
-</div>
+  <div class="hero-grid">
+    <div class="card hero-box">
+      <div class="label">Gerçek Değer / Referans Gram</div>
+      <div id="ref" class="big">Yükleniyor...</div>
 
-</div>
+      <div class="sub">
+        <span class="pill pill-gold" id="updatedAt">Son güncelleme bekleniyor</span>
+        <span class="pill pill-blue" id="sourceName">Kaynak bekleniyor</span>
+      </div>
+    </div>
 
-<div class="card">
-<div class="title">Gerçek Değer</div>
-<div id="ref" class="big">-</div>
-</div>
+    <div class="card decision-box">
+      <div>
+        <div class="label">BUGÜN EN UCUZ YER</div>
+        <div id="best" class="decision-main green">Yükleniyor...</div>
+        <div id="diff" class="decision-text">Karşılaştırma yapılıyor...</div>
+      </div>
+    </div>
+  </div>
 
-<div class="card">
-<div class="title">Yorum</div>
-<div id="comment">Yükleniyor...</div>
-</div>
+  <div class="stats-grid">
+    <div class="card">
+      <div class="label">Ons Altın</div>
+      <div id="ons" class="stat-value">-</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Dolar / TL</div>
+      <div id="usd" class="stat-value">-</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Sistem Durumu</div>
+      <div id="systemState" class="stat-value">-</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="title">Piyasa Karşılaştırma</div>
+
+    <div class="market-grid">
+      <div class="market-box">
+        <h3>Kapalıçarşı</h3>
+
+        <div class="table">
+          <div class="table-left">Alış</div>
+          <div id="kapaliBuy" class="table-right">-</div>
+        </div>
+
+        <div class="table">
+          <div class="table-left">Satış</div>
+          <div id="kapali" class="table-right">-</div>
+        </div>
+
+        <div class="table">
+          <div class="table-left">Makas</div>
+          <div id="kapaliSpread" class="table-right">-</div>
+        </div>
+      </div>
+
+      <div class="market-box">
+        <h3>Banka Ortalama</h3>
+
+        <div class="table">
+          <div class="table-left">Alış</div>
+          <div id="bankaBuy" class="table-right">-</div>
+        </div>
+
+        <div class="table">
+          <div class="table-left">Satış</div>
+          <div id="banka" class="table-right">-</div>
+        </div>
+
+        <div class="table">
+          <div class="table-left">Makas</div>
+          <div id="bankaSpread" class="table-right">-</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="title">Yorum</div>
+    <div id="comment" class="gray">Yükleniyor...</div>
+  </div>
+
+  <div class="footer">
+    Altın Rehberim beta sürümdür. Bu sayfadaki veriler bilgilendirme amaçlıdır ve yatırım tavsiyesi değildir.
+  </div>
 
 </div>
 
 <script>
+function formatTL(v){
+  return new Intl.NumberFormat("tr-TR", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }).format(v) + " TL";
+}
+
+function formatUSD(v){
+  return new Intl.NumberFormat("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }).format(v) + " $";
+}
+
+function formatRate(v){
+  return new Intl.NumberFormat("tr-TR", {
+    minimumFractionDigits: 4,
+    maximumFractionDigits: 4
+  }).format(v) + " TL";
+}
+
+function formatTime(iso){
+  if(!iso) return "Son güncelleme yok";
+  return "Son güncelleme: " + new Date(iso).toLocaleTimeString("tr-TR");
+}
+
 async function loadData(){
   try{
     const [liveRes, marketRes] = await Promise.all([
-      fetch("/api/live"),
-      fetch("/api/market")
+      fetch("/api/live?t=" + Date.now()),
+      fetch("/api/market?t=" + Date.now())
     ]);
 
     const live = await liveRes.json();
     const market = await marketRes.json();
 
     if(!live.ok || !market.ok){
-      document.getElementById("best").innerText = "Veri yok";
+      document.getElementById("errorBox").style.display = "block";
+      document.getElementById("errorBox").innerText = "Veri alınamadı.";
       return;
     }
 
-    const kapali = market.kapalicarsi.sell;
-    const banka = market.banka.sell;
+    document.getElementById("errorBox").style.display = "none";
 
-    document.getElementById("kapali").innerText = kapali + " TL";
-    document.getElementById("banka").innerText = banka + " TL";
+    const kapaliSell = market.kapalicarsi.sell;
+    const bankaSell = market.banka.sell;
+    const diff = Math.abs(kapaliSell - bankaSell);
 
-    document.getElementById("ref").innerText = live.gramTryRef + " TL";
+    document.getElementById("kapaliBuy").innerText = formatTL(market.kapalicarsi.buy);
+    document.getElementById("kapali").innerText = formatTL(kapaliSell);
+    document.getElementById("kapaliSpread").innerText = formatTL(market.kapalicarsi.spread);
 
-    let best = "";
-    let diff = Math.abs(kapali - banka);
+    document.getElementById("bankaBuy").innerText = formatTL(market.banka.buy);
+    document.getElementById("banka").innerText = formatTL(bankaSell);
+    document.getElementById("bankaSpread").innerText = formatTL(market.banka.spread);
 
-    if(kapali < banka){
-      best = "Kapalıçarşı";
-      document.getElementById("diff").innerText = "+" + diff + " TL avantaj";
-      document.getElementById("best").className = "big green";
+    document.getElementById("ref").innerText = formatTL(live.gramTryRef);
+    document.getElementById("ons").innerText = formatUSD(live.goldUsdOunce);
+    document.getElementById("usd").innerText = formatRate(live.usdTry);
+
+    document.getElementById("updatedAt").innerText = formatTime(live.updatedAt);
+    document.getElementById("sourceName").innerText = live.source || "Kaynak yok";
+
+    if(live.fallback){
+      document.getElementById("systemState").innerText = "Yedek veri";
+    } else if(live.cache){
+      document.getElementById("systemState").innerText = "Önbellek";
     } else {
-      best = "Banka";
-      document.getElementById("diff").innerText = "+" + diff + " TL avantaj";
-      document.getElementById("best").className = "big green";
+      document.getElementById("systemState").innerText = "Canlı";
     }
 
-    document.getElementById("best").innerText = best;
+    if(kapaliSell < bankaSell){
+      document.getElementById("best").innerText = "Kapalıçarşı";
+      document.getElementById("best").className = "decision-main green";
+      document.getElementById("diff").innerText = "+" + formatTL(diff) + " avantaj";
+    } else if(bankaSell < kapaliSell){
+      document.getElementById("best").innerText = "Banka";
+      document.getElementById("best").className = "decision-main green";
+      document.getElementById("diff").innerText = "+" + formatTL(diff) + " avantaj";
+    } else {
+      document.getElementById("best").innerText = "Aynı seviye";
+      document.getElementById("best").className = "decision-main gray";
+      document.getElementById("diff").innerText = "Belirgin fark yok";
+    }
 
-    // yorum
     if(live.gramTryRef > 4700){
       document.getElementById("comment").innerText =
-        "Fiyatlar yüksek seviyede, acele alım riskli olabilir.";
+        "Fiyatlar yüksek bölgede görünüyor. Karşılaştırmadan alım yapmak riskli olabilir.";
+    } else if(live.gramTryRef > 4300){
+      document.getElementById("comment").innerText =
+        "Piyasa orta-yüksek bölgede. Makas farkını izleyerek karar vermek daha doğru olur.";
     } else {
       document.getElementById("comment").innerText =
-        "Fiyatlar daha dengeli, karşılaştırarak alım yapılabilir.";
+        "Fiyatlar daha dengeli görünüyor. Karşılaştırmalı alım fırsatı doğabilir.";
     }
 
   }catch(e){
-    document.getElementById("best").innerText = "Hata";
+    document.getElementById("errorBox").style.display = "block";
+    document.getElementById("errorBox").innerText = "Hata oluştu: " + e.message;
   }
 }
 
