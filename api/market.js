@@ -6,25 +6,34 @@ export default async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
 
   try {
-    const baseUrl =
-      process.env.VERCEL_URL
-        ? `https://${process.env.VERCEL_URL}`
-        : `${req.headers["x-forwarded-proto"] || "https"}://${req.headers.host}`;
+    const apiKey = process.env.TWELVE_DATA_API_KEY;
 
-    const liveResp = await fetch(`${baseUrl}/api/live?t=${Date.now()}`);
-    const live = await liveResp.json();
-
-    if (!live.ok) {
+    if (!apiKey) {
       return res.status(200).json({
         ok: false,
-        message: "Canlı veri alınamadı.",
-        live
+        message: "TWELVE_DATA_API_KEY tanımlı değil."
       });
     }
 
-    const ref = Number(live.gramTryRef);
+    const [goldResp, usdResp] = await Promise.all([
+      fetch(`https://api.twelvedata.com/price?symbol=XAU/USD&apikey=${apiKey}`),
+      fetch(`https://api.twelvedata.com/price?symbol=USD/TRY&apikey=${apiKey}`)
+    ]);
 
-    // A modeli: yaklaşık piyasa makası
+    const goldJson = await goldResp.json();
+    const usdJson = await usdResp.json();
+
+    let goldUsdOunce = Number(goldJson.price);
+    let usdTry = Number(usdJson.price);
+
+    // fallback
+    if (!goldUsdOunce || !usdTry || Number.isNaN(goldUsdOunce) || Number.isNaN(usdTry)) {
+      goldUsdOunce = 2320;
+      usdTry = 32.5;
+    }
+
+    const ref = round((goldUsdOunce * usdTry) / 31.1034768);
+
     const kapalicarsiBuy = round(ref * 0.9875);
     const kapalicarsiSell = round(ref * 1.0025);
 
