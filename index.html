@@ -3,125 +3,476 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="robots" content="noindex, nofollow" />
   <title>Altın Rehberim</title>
 
   <style>
-    body {
-      margin: 0;
+    :root{
+      --bg:#f5f1e8;
+      --bg2:#efe9dc;
+      --card:#ffffff;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --gold:#c69214;
+      --gold-soft:#fff4d6;
+      --green:#14804a;
+      --green-soft:#e7f6ed;
+      --red:#b42318;
+      --red-soft:#fdecec;
+      --blue:#1d4ed8;
+      --border:#e8dfcd;
+      --shadow:0 10px 30px rgba(0,0,0,0.06);
+      --radius:22px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body{
+      margin:0;
       font-family: Arial, sans-serif;
-      background: #0b0f1a;
-      color: white;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top, #fffaf0 0%, var(--bg) 45%, var(--bg2) 100%);
     }
 
-    .container {
-      max-width: 500px;
-      margin: auto;
-      padding: 20px;
+    .wrap{
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 18px 16px 36px;
     }
 
-    h1 {
-      margin-bottom: 20px;
+    .top-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:12px;
+      margin-bottom:16px;
     }
 
-    .card {
-      background: #141b2d;
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 15px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    .brand h1{
+      margin:0;
+      font-size:42px;
+      line-height:1;
+      letter-spacing:-1px;
     }
 
-    .big {
-      font-size: 32px;
-      color: #ffd700;
-      font-weight: bold;
+    .brand p{
+      margin:10px 0 0;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.5;
+      max-width:560px;
     }
 
-    .label {
-      color: #aaa;
-      margin-bottom: 5px;
+    .beta-pill{
+      background:var(--gold-soft);
+      color:#7a5a00;
+      border:1px solid #ead28a;
+      border-radius:999px;
+      padding:9px 12px;
+      font-size:13px;
+      font-weight:700;
+      white-space:nowrap;
     }
 
-    .green {
-      color: #00d084;
+    .notice{
+      background:#fff8e8;
+      border:1px solid #efd79b;
+      color:#775c12;
+      border-radius:18px;
+      padding:14px 16px;
+      margin-bottom:16px;
+      line-height:1.55;
+      font-size:14px;
     }
 
-    .loading {
-      opacity: 0.6;
+    .hero{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:14px;
+      margin-bottom:14px;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:18px;
+    }
+
+    .label{
+      font-size:14px;
+      color:var(--muted);
+      margin-bottom:8px;
+    }
+
+    .big-price{
+      font-size:54px;
+      font-weight:800;
+      color:var(--gold);
+      line-height:1;
+      letter-spacing:-1px;
+      margin:0 0 10px;
+    }
+
+    .subline{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      align-items:center;
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .pill{
+      display:inline-block;
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:13px;
+      font-weight:700;
+    }
+
+    .pill-green{
+      background:var(--green-soft);
+      color:var(--green);
+    }
+
+    .pill-gold{
+      background:var(--gold-soft);
+      color:#7a5a00;
+    }
+
+    .decision{
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      min-height:100%;
+    }
+
+    .decision-main{
+      font-size:30px;
+      font-weight:800;
+      margin:8px 0;
+    }
+
+    .decision-main.good{ color:var(--green); }
+    .decision-main.warn{ color:#996300; }
+    .decision-main.bad{ color:var(--red); }
+
+    .decision-text{
+      margin:0;
+      font-size:15px;
+      line-height:1.6;
+      color:#374151;
+    }
+
+    .grid2{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+      margin-bottom:14px;
+    }
+
+    .mini-value{
+      font-size:32px;
+      font-weight:800;
+      line-height:1.1;
+    }
+
+    .section-title{
+      margin:0 0 12px;
+      font-size:24px;
+      font-weight:800;
+      letter-spacing:-0.3px;
+    }
+
+    .products{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    .product{
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:14px;
+      background:#fffdf9;
+    }
+
+    .product h4{
+      margin:0 0 6px;
+      font-size:17px;
+    }
+
+    .product .price{
+      font-size:26px;
+      font-weight:800;
+      margin:0 0 4px;
+    }
+
+    .product p{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    .meta{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+      margin-top:14px;
+    }
+
+    .meta-box{
+      background:#faf7ef;
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:14px;
+      font-size:14px;
+      line-height:1.6;
+      color:#4b5563;
+    }
+
+    .source{
+      margin-top:14px;
+      font-size:13px;
+      color:#6b7280;
+      line-height:1.6;
+      text-align:center;
+    }
+
+    .error{
+      display:none;
+      background:var(--red-soft);
+      border:1px solid #f6c7c7;
+      color:var(--red);
+      border-radius:16px;
+      padding:14px;
+      margin-bottom:14px;
+      font-size:14px;
+    }
+
+    @media (max-width: 720px){
+      .hero,
+      .grid2,
+      .meta,
+      .products{
+        grid-template-columns:1fr;
+      }
+
+      .top-row{
+        flex-direction:column;
+      }
+
+      .brand h1{
+        font-size:34px;
+      }
+
+      .big-price{
+        font-size:46px;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="wrap">
+    <div class="top-row">
+      <div class="brand">
+        <h1>Altın Rehberim</h1>
+        <p>
+          Altın için sade, anlaşılır ve güven veren beta ekranı.
+          Veriler bilgilendirme amaçlıdır. Bu sayfa yatırım tavsiyesi vermez.
+        </p>
+      </div>
+      <div class="beta-pill">BETA SÜRÜM</div>
+    </div>
 
-<div class="container">
-  <h1>Altın Rehberim</h1>
+    <div class="notice">
+      <strong>Uyarı:</strong> Bu sayfadaki veriler bilgilendirme amaçlıdır.
+      Yatırım tavsiyesi değildir. “Referans gram” değeri Kapalıçarşı veya banka satış fiyatı değildir.
+    </div>
 
-  <div class="card">
-    <div class="label">Gram Altın (referans)</div>
-    <div id="gram" class="big loading">Yükleniyor...</div>
+    <div class="error" id="errorBox"></div>
+
+    <div class="hero">
+      <div class="card">
+        <div class="label">Gram Altın (referans)</div>
+        <div class="big-price" id="gramPrice">Yükleniyor...</div>
+        <div class="subline">
+          <span class="pill pill-gold" id="updatedAt">Son güncelleme bekleniyor</span>
+          <span class="pill pill-green" id="sourceName">Kaynak bekleniyor</span>
+        </div>
+      </div>
+
+      <div class="card decision">
+        <div>
+          <div class="label">Bugün ne yapmalı?</div>
+          <div class="decision-main" id="decisionMain">Hesaplanıyor...</div>
+          <p class="decision-text" id="decisionText">
+            Piyasa verileri geldikten sonra kısa yorum burada görünecek.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <div class="label">Ons Altın ($)</div>
+        <div class="mini-value" id="ouncePrice">Yükleniyor...</div>
+      </div>
+
+      <div class="card">
+        <div class="label">Dolar / TL</div>
+        <div class="mini-value" id="usdTry">Yükleniyor...</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="section-title">Altın türleri</h2>
+      <div class="products">
+        <div class="product">
+          <h4>22 Ayar Gram</h4>
+          <div class="price" id="gram22">Yükleniyor...</div>
+          <p>Referans hesaplama</p>
+        </div>
+
+        <div class="product">
+          <h4>Çeyrek Altın</h4>
+          <div class="price" id="quarter">Yükleniyor...</div>
+          <p>Referans hesaplama</p>
+        </div>
+
+        <div class="product">
+          <h4>Yarım Altın</h4>
+          <div class="price" id="half">Yükleniyor...</div>
+          <p>Referans hesaplama</p>
+        </div>
+
+        <div class="product">
+          <h4>Tam Altın</h4>
+          <div class="price" id="full">Yükleniyor...</div>
+          <p>Referans hesaplama</p>
+        </div>
+
+        <div class="product">
+          <h4>Ata Altın</h4>
+          <div class="price" id="ata">Yükleniyor...</div>
+          <p>Referans hesaplama</p>
+        </div>
+
+        <div class="product">
+          <h4>Sistem Durumu</h4>
+          <div class="price" id="systemState">Yükleniyor...</div>
+          <p id="systemDesc">Veri bekleniyor</p>
+        </div>
+      </div>
+
+      <div class="meta">
+        <div class="meta-box">
+          <strong>Bu ekranda ne görüyorsun?</strong><br>
+          Ons altın ve USD/TRY canlı kaynaktan gelir.
+          Gram ve diğer ürünler bu verilerden referans olarak hesaplanır.
+        </div>
+
+        <div class="meta-box">
+          <strong>Sonraki aşama</strong><br>
+          Kapalıçarşı alış/satış, banka alış/satış, makas analizi ve forum/yorum sistemi eklenecek.
+        </div>
+      </div>
+
+      <div class="source">
+        Bu ekran beta sürümdür. Veriler bilgilendirme amaçlıdır ve yatırım tavsiyesi değildir.
+      </div>
+    </div>
   </div>
 
-  <div class="card">
-    <div class="label">Ons Altın ($)</div>
-    <div id="ons">...</div>
-  </div>
-
-  <div class="card">
-    <div class="label">Dolar / TL</div>
-    <div id="usd">...</div>
-  </div>
-
-  <div class="card">
-    <div class="label">Bugün nereden alınmalı?</div>
-    <div id="suggest" class="green">Hesaplanıyor...</div>
-  </div>
-
-  <div class="card">
-    <div class="label">Yorum</div>
-    <div id="comment">Bekleniyor...</div>
-  </div>
-</div>
-
-<script>
-async function loadData() {
-  try {
-    const res = await fetch("/api/live");
-    const data = await res.json();
-
-    if (!data.ok) {
-      document.getElementById("gram").innerText = "Veri alınamadı";
-      return;
+  <script>
+    function tl(value) {
+      return new Intl.NumberFormat("tr-TR", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }).format(value) + " TL";
     }
 
-    const gram = data.gramTryRef;
-    const ons = data.goldUsdOunce;
-    const usd = data.usdTry;
-
-    document.getElementById("gram").innerText = gram + " TL";
-    document.getElementById("gram").classList.remove("loading");
-
-    document.getElementById("ons").innerText = ons + " $";
-    document.getElementById("usd").innerText = usd + " TL";
-
-    // basit analiz
-    if (usd > 40) {
-      document.getElementById("suggest").innerText = "Kapalıçarşı";
-      document.getElementById("comment").innerText =
-        "Bankalara göre daha avantajlı görünüyor.";
-    } else {
-      document.getElementById("suggest").innerText = "Banka";
-      document.getElementById("comment").innerText =
-        "Bankalar daha uygun olabilir.";
+    function usd(value) {
+      return new Intl.NumberFormat("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }).format(value) + " $";
     }
 
-  } catch (e) {
-    document.getElementById("gram").innerText = "Hata oluştu";
-  }
-}
+    function rate(value) {
+      return new Intl.NumberFormat("tr-TR", {
+        minimumFractionDigits: 4,
+        maximumFractionDigits: 4
+      }).format(value) + " TL";
+    }
 
-loadData();
-setInterval(loadData, 60000);
-</script>
+    function timeText(iso) {
+      if (!iso) return "Son güncelleme yok";
+      const d = new Date(iso);
+      return "Son güncelleme: " + d.toLocaleTimeString("tr-TR");
+    }
 
+    async function loadData() {
+      const errorBox = document.getElementById("errorBox");
+
+      try {
+        const res = await fetch("/api/live?t=" + Date.now(), { cache: "no-store" });
+        const data = await res.json();
+
+        if (!data.ok) {
+          throw new Error(data.message || "Veri alınamadı");
+        }
+
+        errorBox.style.display = "none";
+
+        document.getElementById("gramPrice").textContent = tl(data.gramTryRef);
+        document.getElementById("updatedAt").textContent = timeText(data.updatedAt);
+        document.getElementById("sourceName").textContent = data.source || "Kaynak yok";
+
+        document.getElementById("ouncePrice").textContent = usd(data.goldUsdOunce);
+        document.getElementById("usdTry").textContent = rate(data.usdTry);
+
+        document.getElementById("gram22").textContent = tl(data.gram22Ref);
+        document.getElementById("quarter").textContent = tl(data.quarterRef);
+        document.getElementById("half").textContent = tl(data.halfRef);
+        document.getElementById("full").textContent = tl(data.fullRef);
+        document.getElementById("ata").textContent = tl(data.ataRef);
+
+        if (data.fallback) {
+          document.getElementById("systemState").textContent = "Yedek veri";
+          document.getElementById("systemDesc").textContent = "API limiti veya veri hatası nedeniyle fallback çalıştı.";
+        } else if (data.cache) {
+          document.getElementById("systemState").textContent = "Önbellek";
+          document.getElementById("systemDesc").textContent = "Son veri cache üzerinden gösteriliyor.";
+        } else {
+          document.getElementById("systemState").textContent = "Canlı";
+          document.getElementById("systemDesc").textContent = "Veri sağlayıcıdan güncel veri alındı.";
+        }
+
+        if (data.direction === "pahali") {
+          document.getElementById("decisionMain").textContent = "Dikkatli ol";
+          document.getElementById("decisionMain").className = "decision-main bad";
+        } else if (data.direction === "uygun") {
+          document.getElementById("decisionMain").textContent = "Daha uygun seviye";
+          document.getElementById("decisionMain").className = "decision-main good";
+        } else {
+          document.getElementById("decisionMain").textContent = "Karşılaştırarak al";
+          document.getElementById("decisionMain").className = "decision-main warn";
+        }
+
+        document.getElementById("decisionText").textContent = data.comment || "Yorum hazırlanamadı.";
+      } catch (err) {
+        errorBox.style.display = "block";
+        errorBox.textContent = "Veri hatası: " + err.message;
+      }
+    }
+
+    loadData();
+    setInterval(loadData, 30000);
+  </script>
 </body>
 </html>
