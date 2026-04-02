@@ -3,17 +3,31 @@ let cache = {
   time: 0
 };
 
+function round(value, digits = 2) {
+  return Number(Number(value).toFixed(digits));
+}
+
 export default async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
 
   const now = Date.now();
+  const CACHE_MS = 60000; // 60 saniye
 
-  // 60 saniye cache
-  if (cache.data && now - cache.time < 60000) {
-    return res.status(200).json(cache.data);
+  if (cache.data && now - cache.time < CACHE_MS) {
+    return res.status(200).json({
+      ...cache.data,
+      cache: true
+    });
   }
 
   const apiKey = process.env.TWELVE_DATA_API_KEY;
+
+  if (!apiKey) {
+    return res.status(200).json({
+      ok: false,
+      message: "TWELVE_DATA_API_KEY tanımlı değil."
+    });
+  }
 
   try {
     const [goldResp, usdResp] = await Promise.all([
@@ -27,32 +41,77 @@ export default async function handler(req, res) {
     let goldUsdOunce = Number(goldJson.price);
     let usdTry = Number(usdJson.price);
 
-    // 🔥 fallback (API limit gelirse burası çalışır)
-    if (!goldUsdOunce || !usdTry) {
-      goldUsdOunce = 2320; // gerçekçi fallback
+    // Fallback
+    if (!goldUsdOunce || !usdTry || Number.isNaN(goldUsdOunce) || Number.isNaN(usdTry)) {
+      goldUsdOunce = 2320;
       usdTry = 32.5;
+
+      const gramTryRef = round((goldUsdOunce * usdTry) / 31.1034768);
 
       const fallbackData = {
         ok: true,
         fallback: true,
         updatedAt: new Date().toISOString(),
+        source: "Fallback (API limiti veya veri hatası)",
         goldUsdOunce,
         usdTry,
-        gramTryRef: Number(((goldUsdOunce * usdTry) / 31.103).toFixed(2)),
-        source: "Fallback (API limit)"
+        gramTryRef,
+        gram22Ref: round(gramTryRef * 0.916),
+        quarterRef: round(gramTryRef * 1.75),
+        halfRef: round(gramTryRef * 3.5),
+        fullRef: round(gramTryRef * 7.0),
+        ataRef: round(gramTryRef * 7.2),
+        comment: "Canlı veri geçici olarak alınamadı. Gösterilen rakamlar beta amaçlı yedek değerdir."
       };
 
       cache = { data: fallbackData, time: now };
       return res.status(200).json(fallbackData);
     }
 
+    const gramTryRef = round((goldUsdOunce * usdTry) / 31.1034768);
+
+    // Basit referans çarpanlar — ileride iyileştirilecek
+    const gram22Ref = round(gramTryRef * 0.916);
+    const quarterRef = round(gramTryRef * 1.75);
+    const halfRef = round(gramTryRef * 3.5);
+    const fullRef = round(gramTryRef * 7.0);
+    const ataRef = round(gramTryRef * 7.2);
+
+    let direction = "normal";
+    let suggestion = "Bekle";
+    let comment = "Piyasa dengeli görünüyor.";
+
+    if (usdTry > 40 && goldUsdOunce > 3000) {
+      direction = "pahali";
+      suggestion = "Dikkatli ol";
+      comment = "Kur ve ons birlikte yüksek. Alım tarafında acele etmeden izlemek daha mantıklı olabilir.";
+    } else if (usdTry < 35 && goldUsdOunce < 2600) {
+      direction = "uygun";
+      suggestion = "Daha uygun seviye";
+      comment = "Kur ve ons daha sakin. Referans hesaplara göre daha makul seviyeler görülebilir.";
+    } else {
+      direction = "normal";
+      suggestion = "Karşılaştırarak al";
+      comment = "Fiyatlar orta bölgede. Kapalıçarşı ve banka makasını karşılaştırmak önemli.";
+    }
+
     const data = {
       ok: true,
+      fallback: false,
+      cache: false,
       updatedAt: new Date().toISOString(),
-      goldUsdOunce,
-      usdTry,
-      gramTryRef: Number(((goldUsdOunce * usdTry) / 31.103).toFixed(2)),
-      source: "TwelveData"
+      source: "Twelve Data",
+      goldUsdOunce: round(goldUsdOunce, 4),
+      usdTry: round(usdTry, 4),
+      gramTryRef,
+      gram22Ref,
+      quarterRef,
+      halfRef,
+      fullRef,
+      ataRef,
+      direction,
+      suggestion,
+      comment
     };
 
     cache = { data, time: now };
@@ -61,7 +120,7 @@ export default async function handler(req, res) {
   } catch (err) {
     return res.status(200).json({
       ok: false,
-      message: "API hatası ama sistem çalışıyor"
+      message: "API hatası: " + (err.message || "bilinmeyen hata")
     });
   }
 }
