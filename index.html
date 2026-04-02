@@ -445,10 +445,12 @@ async function loadData(){
     const live = await liveRes.json();
     const market = await marketRes.json();
 
-    if(!live.ok || !market.ok){
-      document.getElementById("errorBox").style.display = "block";
-      document.getElementById("errorBox").innerText = "Veri alınamadı.";
-      return;
+    if(!live.ok){
+      throw new Error(live.message || "Canlı veri alınamadı");
+    }
+
+    if(!market.ok){
+      throw new Error(market.message || "Market verisi alınamadı");
     }
 
     document.getElementById("errorBox").style.display = "none";
@@ -472,9 +474,9 @@ async function loadData(){
     document.getElementById("updatedAt").innerText = formatTime(live.updatedAt);
     document.getElementById("sourceName").innerText = live.source || "Kaynak yok";
 
-    if(live.fallback){
-      document.getElementById("systemState").innerText = "Yedek veri";
-    } else if(live.cache){
+    if (live.stale) {
+      document.getElementById("systemState").innerText = "Son başarılı veri";
+    } else if (live.cache) {
       document.getElementById("systemState").innerText = "Önbellek";
     } else {
       document.getElementById("systemState").innerText = "Canlı";
