@@ -5,16 +5,16 @@ function round(value, digits = 2) {
 export default async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
 
+  const apiKey = process.env.TWELVE_DATA_API_KEY;
+
+  if (!apiKey) {
+    return res.status(200).json({
+      ok: false,
+      message: "TWELVE_DATA_API_KEY tanımlı değil."
+    });
+  }
+
   try {
-    const apiKey = process.env.TWELVE_DATA_API_KEY;
-
-    if (!apiKey) {
-      return res.status(200).json({
-        ok: false,
-        message: "TWELVE_DATA_API_KEY tanımlı değil."
-      });
-    }
-
     const [goldResp, usdResp] = await Promise.all([
       fetch(`https://api.twelvedata.com/price?symbol=XAU/USD&apikey=${apiKey}`),
       fetch(`https://api.twelvedata.com/price?symbol=USD/TRY&apikey=${apiKey}`)
@@ -23,13 +23,17 @@ export default async function handler(req, res) {
     const goldJson = await goldResp.json();
     const usdJson = await usdResp.json();
 
-    let goldUsdOunce = Number(goldJson.price);
-    let usdTry = Number(usdJson.price);
+    const goldUsdOunce = Number(goldJson.price);
+    const usdTry = Number(usdJson.price);
 
-    // fallback
-    if (!goldUsdOunce || !usdTry || Number.isNaN(goldUsdOunce) || Number.isNaN(usdTry)) {
-      goldUsdOunce = 2320;
-      usdTry = 32.5;
+    if (
+      !goldUsdOunce || !usdTry ||
+      Number.isNaN(goldUsdOunce) || Number.isNaN(usdTry)
+    ) {
+      return res.status(200).json({
+        ok: false,
+        message: "Market canlı veri şu an alınamıyor."
+      });
     }
 
     const ref = round((goldUsdOunce * usdTry) / 31.1034768);
@@ -43,7 +47,7 @@ export default async function handler(req, res) {
     const kapaliSpread = round(kapalicarsiSell - kapalicarsiBuy);
     const bankaSpread = round(bankaSell - bankaBuy);
 
-    const advantageTl = round(bankaSell - kapalicarsiSell);
+    const advantageTl = round(Math.abs(bankaSell - kapalicarsiSell));
 
     let bestPlace = "Karşılaştır";
     let summary = "İki tarafı da kontrol ederek alım yapmak daha doğru olabilir.";
@@ -56,7 +60,7 @@ export default async function handler(req, res) {
     } else if (bankaSell < kapalicarsiSell) {
       bestPlace = "Banka";
       status = "banka";
-      summary = `Banka satış tarafı Kapalıçarşı'ya göre yaklaşık ${Math.abs(advantageTl)} TL daha uygun görünüyor.`;
+      summary = `Banka satış tarafı Kapalıçarşı'ya göre yaklaşık ${advantageTl} TL daha uygun görünüyor.`;
     }
 
     return res.status(200).json({
