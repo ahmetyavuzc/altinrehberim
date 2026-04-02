@@ -11,12 +11,13 @@ export default async function handler(req, res) {
   res.setHeader("Cache-Control", "no-store");
 
   const now = Date.now();
-  const CACHE_MS = 60000; // 60 saniye
+  const CACHE_MS = 120000; // 2 dakika
 
   if (cache.data && now - cache.time < CACHE_MS) {
     return res.status(200).json({
       ...cache.data,
-      cache: true
+      cache: true,
+      stale: false
     });
   }
 
@@ -38,39 +39,29 @@ export default async function handler(req, res) {
     const goldJson = await goldResp.json();
     const usdJson = await usdResp.json();
 
-    let goldUsdOunce = Number(goldJson.price);
-    let usdTry = Number(usdJson.price);
+    const goldUsdOunce = Number(goldJson.price);
+    const usdTry = Number(usdJson.price);
 
-    // Fallback
-    if (!goldUsdOunce || !usdTry || Number.isNaN(goldUsdOunce) || Number.isNaN(usdTry)) {
-      goldUsdOunce = 2320;
-      usdTry = 32.5;
+    if (
+      !goldUsdOunce || !usdTry ||
+      Number.isNaN(goldUsdOunce) || Number.isNaN(usdTry)
+    ) {
+      if (cache.data) {
+        return res.status(200).json({
+          ...cache.data,
+          cache: true,
+          stale: true,
+          source: "Son başarılı veri"
+        });
+      }
 
-      const gramTryRef = round((goldUsdOunce * usdTry) / 31.1034768);
-
-      const fallbackData = {
-        ok: true,
-        fallback: true,
-        updatedAt: new Date().toISOString(),
-        source: "Fallback (API limiti veya veri hatası)",
-        goldUsdOunce,
-        usdTry,
-        gramTryRef,
-        gram22Ref: round(gramTryRef * 0.916),
-        quarterRef: round(gramTryRef * 1.75),
-        halfRef: round(gramTryRef * 3.5),
-        fullRef: round(gramTryRef * 7.0),
-        ataRef: round(gramTryRef * 7.2),
-        comment: "Canlı veri geçici olarak alınamadı. Gösterilen rakamlar beta amaçlı yedek değerdir."
-      };
-
-      cache = { data: fallbackData, time: now };
-      return res.status(200).json(fallbackData);
+      return res.status(200).json({
+        ok: false,
+        message: "Canlı veri şu an alınamıyor."
+      });
     }
 
     const gramTryRef = round((goldUsdOunce * usdTry) / 31.1034768);
-
-    // Basit referans çarpanlar — ileride iyileştirilecek
     const gram22Ref = round(gramTryRef * 0.916);
     const quarterRef = round(gramTryRef * 1.75);
     const halfRef = round(gramTryRef * 3.5);
@@ -78,27 +69,24 @@ export default async function handler(req, res) {
     const ataRef = round(gramTryRef * 7.2);
 
     let direction = "normal";
-    let suggestion = "Bekle";
-    let comment = "Piyasa dengeli görünüyor.";
+    let suggestion = "Karşılaştırarak al";
+    let comment = "Piyasa orta bölgede. Kapalıçarşı ve banka makasını karşılaştırmak önemli.";
 
     if (usdTry > 40 && goldUsdOunce > 3000) {
       direction = "pahali";
       suggestion = "Dikkatli ol";
-      comment = "Kur ve ons birlikte yüksek. Alım tarafında acele etmeden izlemek daha mantıklı olabilir.";
+      comment = "Kur ve ons birlikte yüksek. Acele alım yerine karşılaştırmalı hareket etmek daha güvenli olabilir.";
     } else if (usdTry < 35 && goldUsdOunce < 2600) {
       direction = "uygun";
       suggestion = "Daha uygun seviye";
       comment = "Kur ve ons daha sakin. Referans hesaplara göre daha makul seviyeler görülebilir.";
-    } else {
-      direction = "normal";
-      suggestion = "Karşılaştırarak al";
-      comment = "Fiyatlar orta bölgede. Kapalıçarşı ve banka makasını karşılaştırmak önemli.";
     }
 
     const data = {
       ok: true,
       fallback: false,
       cache: false,
+      stale: false,
       updatedAt: new Date().toISOString(),
       source: "Twelve Data",
       goldUsdOunce: round(goldUsdOunce, 4),
@@ -114,10 +102,22 @@ export default async function handler(req, res) {
       comment
     };
 
-    cache = { data, time: now };
+    cache = {
+      data,
+      time: now
+    };
 
     return res.status(200).json(data);
   } catch (err) {
+    if (cache.data) {
+      return res.status(200).json({
+        ...cache.data,
+        cache: true,
+        stale: true,
+        source: "Son başarılı veri"
+      });
+    }
+
     return res.status(200).json({
       ok: false,
       message: "API hatası: " + (err.message || "bilinmeyen hata")
