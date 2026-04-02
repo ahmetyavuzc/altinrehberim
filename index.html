@@ -36,7 +36,7 @@
     }
 
     .wrap{
-      max-width: 760px;
+      max-width: 860px;
       margin: 0 auto;
       padding: 18px 16px 36px;
     }
@@ -61,7 +61,7 @@
       color:var(--muted);
       font-size:15px;
       line-height:1.5;
-      max-width:560px;
+      max-width:620px;
     }
 
     .beta-pill{
@@ -86,9 +86,20 @@
       font-size:14px;
     }
 
+    .error{
+      display:none;
+      background:var(--red-soft);
+      border:1px solid #f6c7c7;
+      color:var(--red);
+      border-radius:16px;
+      padding:14px;
+      margin-bottom:14px;
+      font-size:14px;
+    }
+
     .hero{
       display:grid;
-      grid-template-columns:1.2fr .8fr;
+      grid-template-columns:1.15fr .85fr;
       gap:14px;
       margin-bottom:14px;
     }
@@ -143,6 +154,11 @@
       color:#7a5a00;
     }
 
+    .pill-blue{
+      background:#e8efff;
+      color:#294fba;
+    }
+
     .decision{
       display:flex;
       flex-direction:column;
@@ -167,15 +183,15 @@
       color:#374151;
     }
 
-    .grid2{
+    .grid3{
       display:grid;
-      grid-template-columns:1fr 1fr;
+      grid-template-columns:1fr 1fr 1fr;
       gap:14px;
       margin-bottom:14px;
     }
 
     .mini-value{
-      font-size:32px;
+      font-size:30px;
       font-weight:800;
       line-height:1.1;
     }
@@ -187,9 +203,76 @@
       letter-spacing:-0.3px;
     }
 
-    .products{
+    .market-grid{
       display:grid;
       grid-template-columns:1fr 1fr;
+      gap:14px;
+      margin-bottom:14px;
+    }
+
+    .market-box{
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:16px;
+      background:#fffdf9;
+    }
+
+    .market-box h3{
+      margin:0 0 10px;
+      font-size:20px;
+    }
+
+    .rows{
+      display:grid;
+      gap:10px;
+    }
+
+    .row{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:center;
+      padding:10px 0;
+      border-bottom:1px dashed #e8dfcd;
+    }
+
+    .row:last-child{
+      border-bottom:none;
+      padding-bottom:0;
+    }
+
+    .row span:first-child{
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .row strong{
+      font-size:20px;
+    }
+
+    .advantage{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+      margin-bottom:14px;
+    }
+
+    .adv-card{
+      background:#fffdfa;
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:16px;
+    }
+
+    .adv-main{
+      font-size:28px;
+      font-weight:800;
+      margin-top:6px;
+    }
+
+    .products{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
       gap:12px;
     }
 
@@ -243,22 +326,13 @@
       text-align:center;
     }
 
-    .error{
-      display:none;
-      background:var(--red-soft);
-      border:1px solid #f6c7c7;
-      color:var(--red);
-      border-radius:16px;
-      padding:14px;
-      margin-bottom:14px;
-      font-size:14px;
-    }
-
-    @media (max-width: 720px){
+    @media (max-width: 820px){
       .hero,
-      .grid2,
-      .meta,
-      .products{
+      .grid3,
+      .market-grid,
+      .advantage,
+      .products,
+      .meta{
         grid-template-columns:1fr;
       }
 
@@ -283,7 +357,7 @@
         <h1>Altın Rehberim</h1>
         <p>
           Altın için sade, anlaşılır ve güven veren beta ekranı.
-          Veriler bilgilendirme amaçlıdır. Bu sayfa yatırım tavsiyesi vermez.
+          Veriler bilgilendirme amaçlıdır. Yatırım tavsiyesi değildir.
         </p>
       </div>
       <div class="beta-pill">BETA SÜRÜM</div>
@@ -291,33 +365,34 @@
 
     <div class="notice">
       <strong>Uyarı:</strong> Bu sayfadaki veriler bilgilendirme amaçlıdır.
-      Yatırım tavsiyesi değildir. “Referans gram” değeri Kapalıçarşı veya banka satış fiyatı değildir.
+      Yatırım tavsiyesi değildir. Kapalıçarşı ve banka fiyatları şu aşamada yaklaşık makas modeliyle hesaplanır.
     </div>
 
     <div class="error" id="errorBox"></div>
 
     <div class="hero">
       <div class="card">
-        <div class="label">Gram Altın (referans)</div>
+        <div class="label">Referans Gram Altın</div>
         <div class="big-price" id="gramPrice">Yükleniyor...</div>
         <div class="subline">
           <span class="pill pill-gold" id="updatedAt">Son güncelleme bekleniyor</span>
           <span class="pill pill-green" id="sourceName">Kaynak bekleniyor</span>
+          <span class="pill pill-blue" id="marketSource">Piyasa modeli bekleniyor</span>
         </div>
       </div>
 
       <div class="card decision">
         <div>
-          <div class="label">Bugün ne yapmalı?</div>
+          <div class="label">Bugün daha uygun görünen yer</div>
           <div class="decision-main" id="decisionMain">Hesaplanıyor...</div>
           <p class="decision-text" id="decisionText">
-            Piyasa verileri geldikten sonra kısa yorum burada görünecek.
+            Karşılaştırma verileri geldikten sonra kısa yön burada görünecek.
           </p>
         </div>
       </div>
     </div>
 
-    <div class="grid2">
+    <div class="grid3">
       <div class="card">
         <div class="label">Ons Altın ($)</div>
         <div class="mini-value" id="ouncePrice">Yükleniyor...</div>
@@ -326,6 +401,64 @@
       <div class="card">
         <div class="label">Dolar / TL</div>
         <div class="mini-value" id="usdTry">Yükleniyor...</div>
+      </div>
+
+      <div class="card">
+        <div class="label">Sistem Durumu</div>
+        <div class="mini-value" id="systemState">Yükleniyor...</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="section-title">Piyasa karşılaştırması</h2>
+      <div class="market-grid">
+        <div class="market-box">
+          <h3>Kapalıçarşı</h3>
+          <div class="rows">
+            <div class="row">
+              <span>Alış</span>
+              <strong id="kapaliBuy">Yükleniyor...</strong>
+            </div>
+            <div class="row">
+              <span>Satış</span>
+              <strong id="kapaliSell">Yükleniyor...</strong>
+            </div>
+            <div class="row">
+              <span>Makas</span>
+              <strong id="kapaliSpread">Yükleniyor...</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="market-box">
+          <h3>Banka Ortalama</h3>
+          <div class="rows">
+            <div class="row">
+              <span>Alış</span>
+              <strong id="bankaBuy">Yükleniyor...</strong>
+            </div>
+            <div class="row">
+              <span>Satış</span>
+              <strong id="bankaSell">Yükleniyor...</strong>
+            </div>
+            <div class="row">
+              <span>Makas</span>
+              <strong id="bankaSpread">Yükleniyor...</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="advantage">
+        <div class="adv-card">
+          <div class="label">Satış tarafında fark</div>
+          <div class="adv-main" id="advantageTl">Yükleniyor...</div>
+        </div>
+
+        <div class="adv-card">
+          <div class="label">Özet yorum</div>
+          <div class="adv-main" id="marketSummary" style="font-size:22px;">Yükleniyor...</div>
+        </div>
       </div>
     </div>
 
@@ -363,22 +496,21 @@
         </div>
 
         <div class="product">
-          <h4>Sistem Durumu</h4>
-          <div class="price" id="systemState">Yükleniyor...</div>
-          <p id="systemDesc">Veri bekleniyor</p>
+          <h4>Yön Kartı</h4>
+          <div class="price" id="suggestionText" style="font-size:22px;">Yükleniyor...</div>
+          <p>Beta yorum motoru</p>
         </div>
       </div>
 
       <div class="meta">
         <div class="meta-box">
           <strong>Bu ekranda ne görüyorsun?</strong><br>
-          Ons altın ve USD/TRY canlı kaynaktan gelir.
-          Gram ve diğer ürünler bu verilerden referans olarak hesaplanır.
+          Ons altın ve USD/TRY canlı kaynaktan gelir. Kapalıçarşı ve banka fiyatları ise şu aşamada yaklaşık makas modeliyle hesaplanır.
         </div>
 
         <div class="meta-box">
           <strong>Sonraki aşama</strong><br>
-          Kapalıçarşı alış/satış, banka alış/satış, makas analizi ve forum/yorum sistemi eklenecek.
+          Gerçek Kapalıçarşı verisi, banka alış/satış verileri, makas alarmı ve forum/yorum sistemi eklenecek.
         </div>
       </div>
 
@@ -412,67 +544,85 @@
 
     function timeText(iso) {
       if (!iso) return "Son güncelleme yok";
-      const d = new Date(iso);
-      return "Son güncelleme: " + d.toLocaleTimeString("tr-TR");
+      return "Son güncelleme: " + new Date(iso).toLocaleTimeString("tr-TR");
     }
 
-    async function loadData() {
+    async function loadAll() {
       const errorBox = document.getElementById("errorBox");
 
       try {
-        const res = await fetch("/api/live?t=" + Date.now(), { cache: "no-store" });
-        const data = await res.json();
+        const [liveRes, marketRes] = await Promise.all([
+          fetch("/api/live?t=" + Date.now(), { cache: "no-store" }),
+          fetch("/api/market?t=" + Date.now(), { cache: "no-store" })
+        ]);
 
-        if (!data.ok) {
-          throw new Error(data.message || "Veri alınamadı");
-        }
+        const live = await liveRes.json();
+        const market = await marketRes.json();
+
+        if (!live.ok) throw new Error(live.message || "Canlı veri alınamadı");
+        if (!market.ok) throw new Error(market.message || "Piyasa verisi alınamadı");
 
         errorBox.style.display = "none";
 
-        document.getElementById("gramPrice").textContent = tl(data.gramTryRef);
-        document.getElementById("updatedAt").textContent = timeText(data.updatedAt);
-        document.getElementById("sourceName").textContent = data.source || "Kaynak yok";
+        document.getElementById("gramPrice").textContent = tl(live.gramTryRef);
+        document.getElementById("updatedAt").textContent = timeText(live.updatedAt);
+        document.getElementById("sourceName").textContent = live.source || "Kaynak";
+        document.getElementById("marketSource").textContent = market.source || "Piyasa modeli";
 
-        document.getElementById("ouncePrice").textContent = usd(data.goldUsdOunce);
-        document.getElementById("usdTry").textContent = rate(data.usdTry);
+        document.getElementById("ouncePrice").textContent = usd(live.goldUsdOunce);
+        document.getElementById("usdTry").textContent = rate(live.usdTry);
 
-        document.getElementById("gram22").textContent = tl(data.gram22Ref);
-        document.getElementById("quarter").textContent = tl(data.quarterRef);
-        document.getElementById("half").textContent = tl(data.halfRef);
-        document.getElementById("full").textContent = tl(data.fullRef);
-        document.getElementById("ata").textContent = tl(data.ataRef);
+        document.getElementById("gram22").textContent = tl(live.gram22Ref);
+        document.getElementById("quarter").textContent = tl(live.quarterRef);
+        document.getElementById("half").textContent = tl(live.halfRef);
+        document.getElementById("full").textContent = tl(live.fullRef);
+        document.getElementById("ata").textContent = tl(live.ataRef);
+        document.getElementById("suggestionText").textContent = live.suggestion || "Bekle";
 
-        if (data.fallback) {
+        if (live.fallback) {
           document.getElementById("systemState").textContent = "Yedek veri";
-          document.getElementById("systemDesc").textContent = "API limiti veya veri hatası nedeniyle fallback çalıştı.";
-        } else if (data.cache) {
+        } else if (live.cache) {
           document.getElementById("systemState").textContent = "Önbellek";
-          document.getElementById("systemDesc").textContent = "Son veri cache üzerinden gösteriliyor.";
         } else {
           document.getElementById("systemState").textContent = "Canlı";
-          document.getElementById("systemDesc").textContent = "Veri sağlayıcıdan güncel veri alındı.";
         }
 
-        if (data.direction === "pahali") {
-          document.getElementById("decisionMain").textContent = "Dikkatli ol";
-          document.getElementById("decisionMain").className = "decision-main bad";
-        } else if (data.direction === "uygun") {
-          document.getElementById("decisionMain").textContent = "Daha uygun seviye";
-          document.getElementById("decisionMain").className = "decision-main good";
+        document.getElementById("kapaliBuy").textContent = tl(market.kapalicarsi.buy);
+        document.getElementById("kapaliSell").textContent = tl(market.kapalicarsi.sell);
+        document.getElementById("kapaliSpread").textContent = tl(market.kapalicarsi.spread);
+
+        document.getElementById("bankaBuy").textContent = tl(market.banka.buy);
+        document.getElementById("bankaSell").textContent = tl(market.banka.sell);
+        document.getElementById("bankaSpread").textContent = tl(market.banka.spread);
+
+        document.getElementById("advantageTl").textContent =
+          market.advantageTl >= 0
+            ? tl(market.advantageTl)
+            : "- " + tl(Math.abs(market.advantageTl));
+
+        document.getElementById("marketSummary").textContent = market.summary || "Karşılaştırma yok";
+
+        document.getElementById("decisionMain").textContent = market.bestPlace || "Karşılaştır";
+        document.getElementById("decisionText").textContent =
+          market.summary || "Fark analizi hazırlanamadı.";
+
+        const decision = document.getElementById("decisionMain");
+        if (market.status === "kapali") {
+          decision.className = "decision-main good";
+        } else if (market.status === "banka") {
+          decision.className = "decision-main good";
         } else {
-          document.getElementById("decisionMain").textContent = "Karşılaştırarak al";
-          document.getElementById("decisionMain").className = "decision-main warn";
+          decision.className = "decision-main warn";
         }
 
-        document.getElementById("decisionText").textContent = data.comment || "Yorum hazırlanamadı.";
       } catch (err) {
         errorBox.style.display = "block";
         errorBox.textContent = "Veri hatası: " + err.message;
       }
     }
 
-    loadData();
-    setInterval(loadData, 30000);
+    loadAll();
+    setInterval(loadAll, 30000);
   </script>
 </body>
 </html>
